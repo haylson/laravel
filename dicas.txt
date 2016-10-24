@@ -1,0 +1,100 @@
+Comando para a instalação do laravel na vesao 5.1
+
+- composer create-project --prefer-dist laravel/laravel nome-do-projeto 5.1.*
+
+alterar namespace da aplicação (alterar de app para o nome que voce quer):
+
+- php artisan app:name CodeDelivery
+
+- Criar a pasta Models dentro de app, e jogar User dentro.
+
+
+criar pacote de estrutura de repositorio (https://github.com/andersao/l5-repository)
+
+- composer require prettus/l5-repository
+
+add no config/app em providers:
+
+- Prettus\Repository\Providers\RepositoryServiceProvider::class,
+rodar o comando:
+
+- php artisan vendor:publish
+
+
+Instalar Pacote de Views (https://github.com/bestmomo/scafold)
+
+- composer require bestmomo/scafold
+
+- Bestmomo\Scafold\ScafoldServiceProvider::class, (no config/app > providers)
+
+- php artisan vendor:publish
+
+Criando um Controller (app/Http/Controllers)
+
+- php artisan make:controller CategoriesController --plain
+
+Criando View (resources/views/pasta/arquivo.blade.php)
+
+Trabalhar com Forms 
+
+- https://github.com/illuminate/html (para trabalhar com form no laravel 5.1)
+
+- composer require illuminate/html
+
+- Para versões do laravel 5.2 para cima, usar o collective/html (https://laravelcollective.com/docs/5.2/html#installation) ou (https://laravelcollective.com/docs/5.3/html)
+
+Endereço documentação de validações
+(https://laravel.com/docs/5.1/validation#available-validation-rules)
+
+Resources > views > app.blade.php (Template inicial, alterar menu e title da pagina)
+
+
+Resources > views > admin > _form.blade (para refatorar o form centralizando os campos do formulario em um arquivo unico)
+
+Resources > views > errors > _check.blade.php (criado esse arquivo para os erros)
+
+Criando Crud de Produtos do zero:
+
+Criando na ordem:
+- ProductsController.php (app > http > Controllers)
+- Routes.php (app > http > routes)
+- Resources > Views > admin > criar pasta products > arquivos blade (_form, create, edit e index)
+- app.blade.php (adicionar menu produto)
+- Corrigindo o BindingResolutionException e is not instantiable (adicionar os repositories de produto na pasta app > Providers > RepositoryServiceProvider)
+$this->app->bind(
+  'CodeDelivery\Repositories\ProductRepository',
+  'CodeDelivery\Repositories\ProductRepositoryEloquent'
+);
+- AdminProductRequest.php (app > http > requests)
+
+
+Criando Middleware:
+
+php artisan make:middleware CheckRole
+
+Atualizando as Seeds
+
+php artisan migrate:refresh --seed (recria as tabelas e popula)
+
+php artisan migrate (criar tabelas)
+
+php artisan db:seed (popula as tabelas)
+
+composer dump-autoload (para o composer gerar novamente os arquivos dele)
+
+
+## Arquitetura
+
+- Models > Route > Controllers > Views > Services > Repositories
+
+
+---------------------------------------------------
+
+Perguntas:
+
+Na aula Custom Request, mostra como colocar as mensagens de erro, mas aparecem em ingles. Como fazer a internacionalização dessas mensagens para o portugues?
+
+
+
+
+
