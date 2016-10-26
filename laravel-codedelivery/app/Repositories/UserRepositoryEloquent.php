@@ -6,7 +6,7 @@ use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use CodeDelivery\Repositories\UserRepository;
 use CodeDelivery\Models\User;
-use CodeDelivery\Validators\UserValidator;
+//use CodeDelivery\Validators\UserValidator;
 
 /**
  * Class UserRepositoryEloquent

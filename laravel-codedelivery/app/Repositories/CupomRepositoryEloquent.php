@@ -6,7 +6,7 @@ use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use CodeDelivery\Repositories\CupomRepository;
 use CodeDelivery\Models\Cupom;
-use CodeDelivery\Validators\CupomValidator;
+//use CodeDelivery\Validators\CupomValidator;
 
 /**
  * Class CupomRepositoryEloquent

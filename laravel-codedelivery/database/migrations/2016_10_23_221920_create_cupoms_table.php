@@ -34,6 +34,11 @@ class CreateCupomsTable extends Migration
 	 */
 	public function down()
 	{
+        Schema::table('orders', function(Blueprint $table) {
+            $table->dropForeign('orders_cupom_id_foreign');
+            $table->dropColumn('cupom_id');
+        });
+
 		Schema::drop('cupoms');
 	}
 

@@ -6,7 +6,7 @@ use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use CodeDelivery\Repositories\OrderItemRepository;
 use CodeDelivery\Models\OrderItem;
-use CodeDelivery\Validators\OrderItemValidator;
+//use CodeDelivery\Validators\OrderItemValidator;
 
 /**
  * Class OrderItemRepositoryEloquent
@@ -20,9 +20,9 @@ class OrderItemRepositoryEloquent extends BaseRepository implements OrderItemRep
      * @return string
      */
     public function model()
-    {
-        return OrderItem::class;
-    }
+{
+    return OrderItem::class;
+}
 
     
 
