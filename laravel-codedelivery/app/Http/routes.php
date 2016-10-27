@@ -4,7 +4,11 @@ Route::get('/home', function() {
     return view('home');
 });
 
-Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole', 'as' => 'admin.'], function() {
+/*Route::get('/auth/logout', function() {
+    return view('/auth/register');
+});*/
+
+Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole:admin', 'as' => 'admin.'], function() {
 
     Route::get('categories',['as' => 'categories.index', 'uses' => 'CategoriesController@index']);
     Route::get('categories/create',['as' => 'categories.create', 'uses' => 'CategoriesController@create']);
@@ -36,7 +40,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole', 'as' => 'ad
     Route::post('cupoms/store',['as' => 'cupoms.store', 'uses' => 'CupomsController@store']);
 });
 
-Route::group(['prefix' => 'customer', 'as' => 'customer.'], function() {
+Route::group(['prefix' => 'customer', 'middleware' => 'auth.checkrole:user', 'as' => 'customer.'], function() {
 
     Route::get('order',['as'=>'order.index','uses'=>'CheckoutController@index']);
     Route::post('order/store',['as'=>'order.store','uses'=>'CheckoutController@store']);
