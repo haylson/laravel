@@ -90,6 +90,93 @@ composer dump-autoload (para o composer gerar novamente os arquivos dele)
 - Models > Route > Controllers > Views > Services > Repositories
 
 
+## OAUTH2 (https://github.com/lucadegasperi/oauth2-server-laravel)
+
+Documentação: https://github.com/lucadegasperi/oauth2-server-laravel/tree/master/docs#readme
+
+Instalação:
+
+(incluir no composer.json da seguinte forma)
+
+composer require lucadegasperi/oauth2-server-laravel:5.1.*
+
+Depois adicionar os providers em config/app.php dentro de ('providers' => [):
+
+LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider::class,
+LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class,
+
+Adicionar agora a Facade em config/app.php dentro de ('aliases' => [)::
+
+'Authorizer' => LucaDegasperi\OAuth2Server\Facades\Authorizer::class,
+
+Adicionar em app/Http/Kernel.php no $middleware (Globais):
+
+\LucaDegasperi\OAuth2Server\Middleware\OAuthExceptionHandlerMiddleware::class,
+
+E colocar a Exception route no VerifyCsrfToken em app\Http\Middleware\ em protected $except colocar as rotas que devem escapar:
+
+'oauth/access_token'
+
+Adicionar em app/Http/Kernel.php no $routeMiddleware (middleware de Rota):
+
+'oauth' => \LucaDegasperi\OAuth2Server\Middleware\OAuthMiddleware::class,
+'oauth-user' => \LucaDegasperi\OAuth2Server\Middleware\OAuthUserOwnerMiddleware::class,
+'oauth-client' => \LucaDegasperi\OAuth2Server\Middleware\OAuthClientOwnerMiddleware::class,
+'check-authorization-params' => \LucaDegasperi\OAuth2Server\Middleware\CheckAuthCodeRequestMiddleware::class,
+
+Agora dar o comando: (cria as migrations para a criação das tabelas do oauth no banco de dados).
+php artisan vendor:publish
+
+depois
+
+php artisan migrate
+
+---- Implementing an Authorization Server with the Password Grant (Outras configurações)
+
+(https://github.com/lucadegasperi/oauth2-server-laravel/blob/master/docs/authorization-server/password.md)
+
+No config/oauth2.php em 'grant_types' colocar o codigo:
+
+'password' => [
+        'class' => '\League\OAuth2\Server\Grant\PasswordGrant',
+        'callback' => '\App\PasswordGrantVerifier@verify',
+        'access_token_ttl' => 3600
+    ]
+Alterar o caminho: 
+'callback' => '\App\PasswordGrantVerifier@verify', 
+(para no nosso caso)
+'callback' => '\CodeDelivery\OAuth2\PasswordVerifier@verify',
+
+Criar o callback, dentro de app cria uma pasta chamada OAuth2, e dentro cria o arquivo PasswordVerifier.php
+
+E colar o código a seguir dentro da class:
+
+public function verify($username, $password)
+  {
+      $credentials = [
+        'email'    => $username,
+        'password' => $password,
+      ];
+
+      if (Auth::once($credentials)) {
+          return Auth::user()->id;
+      }
+
+      return false;
+  }
+
+Lembrar de fazer a inmportação do Auth (use Illuminate\Support\Facades\Auth;)
+
+Criar a rota pra gerar o token, em routes.php:
+
+Route::post('oauth/access_token', function() {
+    return Response::json(Authorizer::issueAccessToken());
+});
+
+Fazer teste de autenticação pelo postman.
+
+
+
 ---------------------------------------------------
 
 Perguntas:
