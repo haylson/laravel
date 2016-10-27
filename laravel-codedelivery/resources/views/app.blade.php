@@ -39,6 +39,7 @@
 					<li><a href="{{ route('admin.clients.index') }}">Clientes</a></li>
 					<li><a href="{{ route('admin.cupoms.index') }}">Cupons</a></li>
 					<li><a href="{{ route('admin.orders.index') }}">Pedidos</a></li>
+					<li><a href="{{ route('customer.order.create') }}">Meus Pedidos</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">

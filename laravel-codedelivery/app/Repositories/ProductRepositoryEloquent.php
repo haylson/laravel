@@ -14,7 +14,7 @@ use CodeDelivery\Models\Product;
  */
 class ProductRepositoryEloquent extends BaseRepository implements ProductRepository
 {
-    public function getLists()
+    public function listar()
     {
         return $this->model->get(['id','name','price']);
     }
