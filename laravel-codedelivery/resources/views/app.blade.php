@@ -42,7 +42,7 @@
 					<li><a href="{{ route('admin.clients.index') }}">Clientes</a></li>
 					<li><a href="{{ route('admin.cupoms.index') }}">Cupons</a></li>
 					<li><a href="{{ route('admin.orders.index') }}">Pedidos</a></li>
-					@elseif(Auth::user()->role == "user")
+					@elseif(Auth::user()->role == "client")
 						<li><a href="{{ route('customer.order.index') }}">Meus Pedidos</a></li>
 						<li><a href="{{ route('customer.order.create') }}">Criar Pedidos</a></li>
 					@endif

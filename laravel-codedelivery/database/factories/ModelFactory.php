@@ -18,7 +18,6 @@ $factory->define(CodeDelivery\Models\User::class, function (Faker\Generator $fak
         'name' => $faker->name,
         'email' => $faker->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
-        'role' => 'user',
         'remember_token' => str_random(10),
     ];
 });

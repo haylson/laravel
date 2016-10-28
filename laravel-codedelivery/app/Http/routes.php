@@ -40,7 +40,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole:admin', 'as' 
     Route::post('cupoms/store',['as' => 'cupoms.store', 'uses' => 'CupomsController@store']);
 });
 
-Route::group(['prefix' => 'customer', 'middleware' => 'auth.checkrole:user', 'as' => 'customer.'], function() {
+Route::group(['prefix' => 'customer', 'middleware' => 'auth.checkrole:client', 'as' => 'customer.'], function() {
 
     Route::get('order',['as'=>'order.index','uses'=>'CheckoutController@index']);
     Route::post('order/store',['as'=>'order.store','uses'=>'CheckoutController@store']);
@@ -49,4 +49,26 @@ Route::group(['prefix' => 'customer', 'middleware' => 'auth.checkrole:user', 'as
 
 Route::post('oauth/access_token', function() {
     return Response::json(Authorizer::issueAccessToken());
+});
+
+Route::group(['prefix'=>'api','middleware'=>'oauth','as'=>'api.'],function () {
+
+    Route::group(['prefix'=>'client','middleware'=>'oauth.checkrole:client','as'=>'client.'],function () {
+
+        Route::resource('order','Api\Client\ClientCheckoutController',
+            ['except'=>['create','edit','delete']
+        ]);
+        //Route::get('product','Api\Client\ClientProductController@index');
+
+    });
+
+    Route::group(['prefix'=>'deliveryman','middleware'=>'oauth.checkrole:deliveryman','as'=>'deliveryman.'],function () {
+
+
+        /*Route::resource('order',
+            'Api\Deliveryman\DeliverymanCheckoutController',
+            ['except'=>['create','edit','delete','store']]
+        );*/
+    });
+
 });

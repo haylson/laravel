@@ -77,7 +77,7 @@ class OrderService{
 
             \DB::commit();
 
-            //return $order;
+            return $order;
         } catch (\Exception $e){
             \DB::rollback();
             throw $e;

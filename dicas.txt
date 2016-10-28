@@ -173,15 +173,20 @@ Route::post('oauth/access_token', function() {
     return Response::json(Authorizer::issueAccessToken());
 });
 
+Preencher tabela no banco de dados (oauth_clients):
+
+INSERT INTO `oauth_clients`(`id`, `secret`, `name`, `created_at`, `updated_at`) VALUES ('appid01','secret','Meu app', null, null)
+
 Fazer teste de autenticação pelo postman.
 
+grant_type:       password
+username:        user@user.com
+password:        123456
+client_id:          appid01
+client_secret:    secret
 
 
----------------------------------------------------
 
-Perguntas:
-
-Na aula Custom Request, mostra como colocar as mensagens de erro, mas aparecem em ingles. Como fazer a internacionalização dessas mensagens para o portugues?
 
 
 
