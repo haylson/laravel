@@ -52,7 +52,15 @@ Route::post('oauth/access_token', function() {
 });
 
 Route::group(['prefix'=>'api','middleware'=>'oauth','as'=>'api.'],function () {
-
+		
+	Route::get('test',function() { 
+		return [
+			'id' => 1,
+			'client' => 'Luiz Carlos',
+			'total' => 10
+		]
+	});		
+		
     Route::group(['prefix'=>'client','middleware'=>'oauth.checkrole:client','as'=>'client.'],function () {
 
         Route::resource('order','Api\Client\ClientCheckoutController',

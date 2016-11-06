@@ -64,10 +64,16 @@ class ClientCheckoutController extends Controller
     }
 
     public function show($id){
-        return $this->repository
+        $order = $this->repository->with(['client','items','cupom'])->find($id);
+        $order->items->each(function ($item){
+            $item->product;
+        });
+        return $order;
+        /*return $this->repository
             ->skipPresenter(false)
             ->with($this->with)
             ->find($id);
+        */
     }
 
 }
