@@ -58,7 +58,7 @@ Route::group(['prefix'=>'api','middleware'=>'oauth','as'=>'api.'],function () {
 			'id' => 1,
 			'client' => 'Luiz Carlos',
 			'total' => 10
-		]
+		];
 	});		
 		
     Route::group(['prefix'=>'client','middleware'=>'oauth.checkrole:client','as'=>'client.'],function () {
